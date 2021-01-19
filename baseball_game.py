@@ -63,7 +63,7 @@ def is_between_100_and_999(user_input_number):
     # '''
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
-    if is_digit(user_input_number) == False:
+    if not user_input_number.isdigit():
         return False
     result = True if 100 <= int(user_input_number) <= 999 else False
 
@@ -95,7 +95,7 @@ def is_duplicated_number(three_digit):
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
     l = [i for i in three_digit]
     s = set(l)
-    result = True if len(l) != len(s) else False
+    result = True if len(l) > len(s) else False
     # ==================================
     return result
 
@@ -274,41 +274,46 @@ def main():
 
     # ===Modify codes below=============
     # 위의 코드를 포함하여 자유로운 수정이 가능함
-    ext, count = False, 3
+    ext, zero = False, False
     while not ext:
-        s = None
+        s = False
         user_input = 999
         random_number = str(get_not_duplicated_three_digit_number())
         print("Random Number is : ", random_number)
 
-        while count > 0:
+        while not zero:
             user_input = input("Input guess number : ")
             while is_validated_number(user_input) == False:
                 print("Wrong Input, Input again")
-                user_input = input("Input guess number : ")
+                user_input = input(f"Input guess number : ")
             if user_input == "0":
+                zero = True
                 break
             result = get_strikes_or_ball(user_input, random_number)
             print(f"Strikes : {result[0]} , Balls : {result[1]}")
             if result[0] == 3:
+                s = "win"
                 break
 
-            count -= 1
-
-        if user_input == "0":
+        if zero == True:
             break
 
-        s = "loose" if count == 0 else "win"
-        print(f"You {s}, one more(Y/N)?", end="")
-        response = input()
+        response = input(f"You {s}, one more(Y/N)?")
+
+        if response == "0":
+            zero = True
 
         while not is_yes(response) and not is_no(response):
+            if response == "0":
+                zero = True
+                break
             print("Wrong Input, Input again")
             response = input(f"You {s}, one more(Y/N)?")
 
+        if zero == True:
+            break
+
         ext = False if is_yes(response) else True
-        if ext == False:
-            count = 3
 
     # ==================================
     print("Thank you for using this program")

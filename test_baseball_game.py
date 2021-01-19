@@ -149,6 +149,7 @@ class TestBaseballGame(unittest.TestCase):
                             strikes, ball = self.get_strikes_or_ball(
                                 input_list[i], target_number
                             )
+                            print(str(strikes))
                             self.assertIn(str(strikes), console[i + 2].upper())
                             self.assertIn(str(ball), console[i + 2].upper())
                     elif int(input_list[i]) > int(target_number):
