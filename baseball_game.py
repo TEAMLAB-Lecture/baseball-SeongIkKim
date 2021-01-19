@@ -123,6 +123,8 @@ def is_validated_number(user_input_number):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당
     result = True
+    if user_input_number == "0":
+        return True
     if (
         (is_digit(user_input_number) == False)
         or (is_between_100_and_999(user_input_number) == False)
@@ -281,16 +283,20 @@ def main():
 
         while count > 0:
             user_input = input("Input guess number : ")
-
             while is_validated_number(user_input) == False:
                 print("Wrong Input, Input again")
                 user_input = input("Input guess number : ")
+            if user_input == "0":
+                break
             result = get_strikes_or_ball(user_input, random_number)
             print(f"Strikes : {result[0]} , Balls : {result[1]}")
             if result[0] == 3:
                 break
 
             count -= 1
+
+        if user_input == "0":
+            break
 
         s = "loose" if count == 0 else "win"
         print(f"You {s}, one more(Y/N)?", end="")
